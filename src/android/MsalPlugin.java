@@ -48,8 +48,8 @@ public class MsalPlugin extends CordovaPlugin {
     private IMultipleAccountPublicClientApplication appMultipleClient;
     private boolean isInit = false;
 
-    private String clientId;
-    private String tenantId;
+    //private String clientId;
+    //private String tenantId;
     private String keyHash;
     private String accountMode;
     private String[] scopes;
@@ -71,8 +71,8 @@ public class MsalPlugin extends CordovaPlugin {
         activity = cordova.getActivity();
         context = webView.getContext();
 
-        clientId = this.preferences.getString("clientId","");
-        tenantId = this.preferences.getString("tenantId","common");
+        //clientId = this.preferences.getString("clientId","");
+        //tenantId = this.preferences.getString("tenantId","common");
         keyHash = this.preferences.getString("keyHash","");
 
 
@@ -189,7 +189,7 @@ public class MsalPlugin extends CordovaPlugin {
                             authorities.append("        \"type\": \"" + authority.getString("type") + "\",\n");
                             authorities.append("        \"audience\": {\n");
                             authorities.append("          \"type\": \"" + authority.getString("audience") + "\",\n");
-                            authorities.append("          \"tenant_id\": \"" + MsalPlugin.this.tenantId + "\"\n");
+                            authorities.append("          \"tenant_id\": \"" + options.getString("tenantId") + "\"\n");
                             authorities.append("        },\n");
                             if (authority.has("authorityUrl") && !authority.getString("authorityUrl").equals("")) {
                                 authorities.append("          \"authority_url\": \"" + authority.getString("authorityUrl") + "\",\n");
@@ -201,7 +201,7 @@ public class MsalPlugin extends CordovaPlugin {
                         }
                         authorities.append("    ]\n");
                         data = "{\n" +
-                                "    \"client_id\" : \"" + MsalPlugin.this.clientId + "\",\n" +
+                                "    \"client_id\" : \"" + options.getString("clientId") + "\",\n" +
                                 "    \"account_mode\": \"" + options.getString("accountMode") + "\",\n" +
                                 "    \"authorization_user_agent\" : \"" + options.getString("authorizationUserAgent") + "\",\n" +
                                 "    \"redirect_uri\" : \"msauth://" + MsalPlugin.this.activity.getApplicationContext().getPackageName() + "/" + keyHashUrlFriendly + "\",\n" +
