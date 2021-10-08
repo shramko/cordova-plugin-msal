@@ -26,8 +26,8 @@
     }
     NSDictionary *options = (NSDictionary *)obj;
 	
-	self.tenantId = [options objectForKey:[@"tenantId" lowercaseString]];
-    self.clientId = [options objectForKey:[@"clientId" lowercaseString]];
+	self.tenantId = [options objectForKey:@"tenantId"];
+	self.clientId = [options objectForKey:@"clientId"];
 	
     NSArray *authorities = [options objectForKey:@"authorities"];
     for (NSDictionary *a in authorities)
