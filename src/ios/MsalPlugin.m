@@ -6,9 +6,7 @@
 
 - (void)msalInit:(CDVInvokedUrlCommand *)command
 {
-    NSDictionary *settings = self.commandDelegate.settings;
-    self.tenantId = [settings objectForKey:[@"tenantId" lowercaseString]];
-    self.clientId = [settings objectForKey:[@"clientId" lowercaseString]];
+    NSDictionary *settings = self.commandDelegate.settings;   
 
     NSError *err = nil;
     NSError *msalError = nil;
@@ -27,6 +25,10 @@
         return;
     }
     NSDictionary *options = (NSDictionary *)obj;
+	
+	self.tenantId = [options objectForKey:[@"tenantId" lowercaseString]];
+    self.clientId = [options objectForKey:[@"clientId" lowercaseString]];
+	
     NSArray *authorities = [options objectForKey:@"authorities"];
     for (NSDictionary *a in authorities)
     {
