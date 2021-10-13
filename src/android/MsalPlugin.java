@@ -48,8 +48,6 @@ public class MsalPlugin extends CordovaPlugin {
     private IMultipleAccountPublicClientApplication appMultipleClient;
     private boolean isInit = false;
 
-    //private String clientId;
-    //private String tenantId;
     private String keyHash;
     private String accountMode;
     private String[] scopes;
@@ -70,12 +68,7 @@ public class MsalPlugin extends CordovaPlugin {
 
         activity = cordova.getActivity();
         context = webView.getContext();
-
-        //clientId = this.preferences.getString("clientId","");
-        //tenantId = this.preferences.getString("tenantId","common");
         keyHash = this.preferences.getString("keyHash","");
-
-
     }
 
     @Override
