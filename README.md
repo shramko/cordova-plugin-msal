@@ -72,8 +72,8 @@ The options parameter is an object that contains all of your MSAL configuration 
     brokerRedirectUri: false,
     accountMode: 'SINGLE',
     scopes: ['User.Read'],
-    **clientId:**'clientId', //add client id here too
-    **tenantId:**'tenantId', //add tennant id here
+    clientId:'clientId', //add client id here too
+    tenantId:'tenantId', //add tennant id here
 }
 ```
 Like I said before, this readme assumes basic knowledge of MSAL and you should look at Microsoft's documentation for how most of these attributes work, as they are named very similar both in this library and in all native platforms. But here is a basic refresher of what each option does and how to use it in this plugin.
@@ -101,6 +101,51 @@ This is another Android option (boolean). Set to true if you want your applicati
 This is either 'SINGLE' or 'MULTIPLE' and controls the behavior of signing in and out. In single mode, MSAL only uses one account at a time, and signs in the user silently with that account if you call signInSilent(). In multiple account mode, you can support multiple accounts in your app, but you need to manage MSAL's list of those accounts (see below) and pass in which account you want to sign in and out of unless you're doing interactive sign-in. Default: 'SINGLE'
 #### scopes
 This is a text array and represents the information MSAL requests from the Graph API during its operation. In most cases you won't need to change this, and only do so if you really know what you're doing. Default: ['User.Read']
+
+#### clientId, tennantId
+This is a new props that allow you do multiple configurations for one app
+
+```js
+// Config object to be passed to Msal on creation
+    const msalB2CConfig = {
+        authorities: [
+            {
+                type: 'B2C',
+                audience: 'AzureADandPersonalMicrosoftAccount',
+                authorityUrl: `https://${config.azureB2C.knownAuthority}/tfp/${config.azureB2C.tenant}/${config.azureB2C.userFlows.signUpSignIn}`,
+                cloudInstance: 'MSALAzurePublicCloudInstance',
+                default: true
+            }
+        ],
+        authorizationUserAgent: 'DEFAULT',
+        multipleCloudsSupported: false,
+        brokerRedirectUri: false,
+        accountMode: 'SINGLE',
+        clientId:config.azureB2C.clientId,
+        tenantId:"",
+        scopes: [...config.azureB2C.scopes]
+    };
+
+    const msalAADConfig = {
+        authorities: [
+            {
+                type: 'AAD',
+                audience: 'AzureADMyOrg',
+                authorityUrl: `https://login.microsoftonline.com/${config.azureAAD.tenantId}`,
+                cloudInstance: 'MSALAzurePublicCloudInstance',
+                default: true
+            }
+        ],
+        authorizationUserAgent: 'DEFAULT',
+        multipleCloudsSupported: false,
+        brokerRedirectUri: false,
+        accountMode: 'SINGLE',
+        clientId:config.azureAAD.clientId,
+        tenantId:config.azureAAD.tenantId,
+        scopes: [...config.azureAAD.scopes]
+    };
+    //now you can pass one of the above config to msalInit method
+```
 
 Ok, you have your plugin initialized with your organization's configuration. Here's how you sign users in and out:
 ### Single Client
