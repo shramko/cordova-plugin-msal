@@ -71,7 +71,9 @@ The options parameter is an object that contains all of your MSAL configuration 
     multipleCloudsSupported: false,
     brokerRedirectUri: false,
     accountMode: 'SINGLE',
-    scopes: ['User.Read']
+    scopes: ['User.Read'],
+    **clientId:**'clientId', //add client id here too
+    **tenantId:**'tenantId', //add tennant id here
 }
 ```
 Like I said before, this readme assumes basic knowledge of MSAL and you should look at Microsoft's documentation for how most of these attributes work, as they are named very similar both in this library and in all native platforms. But here is a basic refresher of what each option does and how to use it in this plugin.
